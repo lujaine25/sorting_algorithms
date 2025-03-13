@@ -2,6 +2,7 @@ import random
 import time
 import matplotlib.pyplot as plt
 
+#hi 
 
 def generate_arr(size: int):
     return [random.randint(0, size) for _ in range(size)]
