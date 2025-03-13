@@ -42,24 +42,57 @@ def insertion_sort(arr):
             j -= 1
         arr[j + 1] = temp
 
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return
 
+    r = len(arr) // 2
+    L = arr[:r]
+    M = arr[r:]
+
+    merge_sort(L)
+    merge_sort(M)
+
+    i = j = k = 0
+
+    while i < len(L) and j < len(M):
+        if L[i] < M[j]:
+            arr[k] = L[i]
+            i += 1
+        else:
+            arr[k] = M[j]
+            j += 1
+        k += 1
+
+    while i < len(L):
+        arr[k] = L[i]
+        i += 1
+        k += 1
+
+    while j < len(M):
+        arr[k] = M[j]
+        j += 1
+        k += 1
 # Generate random array
 array_sizes = [1000, 2000,10000,25000]
 bubble_times = []
 selection_times = []
 insertion_times = []
+merge_times = []
 for size in array_sizes:
     random_array = generate_arr(size)
 
     bubble_times.append(measure_sorting_time(bubble_sort, random_array))
     selection_times.append(measure_sorting_time(selection_sort, random_array))
     insertion_times.append(measure_sorting_time(insertion_sort, random_array))
+    merge_times.append(measure_sorting_time(merge_sort, random_array))
 
 # Plot the graph
 plt.figure(figsize=(10, 6))
 plt.plot(array_sizes, bubble_times, marker='o', linestyle='-', color='r', label="Bubble Sort")
 plt.plot(array_sizes, selection_times, marker='s', linestyle='-', color='g', label="Selection Sort")
 plt.plot(array_sizes, insertion_times, marker='d', linestyle='-', color='b', label="Insertion Sort")
+plt.plot(array_sizes, merge_times, marker='x', linestyle='-', color='y', label="Merge Sort")
 
 # Graph Labels & Title
 plt.xlabel("Array Size")
