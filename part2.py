@@ -1,3 +1,4 @@
+# Insertion sort
 def insertion_sort(arr):
     for i in range(1, len(arr)):
         temp = arr[i]
@@ -17,16 +18,16 @@ def hybrid_merge_insertion (arr,THRESHOLD ):
     M = arr[r:]
 
     hybrid_merge_insertion(L,THRESHOLD)
-    hybrid_merge_insertion(M,THRESHOLD)
+    hybrid_merge_insertion(M,THRESHOLD)                       # Best/Worst/Average case : O(n log n)
 
-    i = j = k = 0
+    i = j = k = 0                                             # Insertion sort is O(n^2) for worst case
 
-    while i < len(L) and j < len(M):
-        if L[i] < M[j]:
-            arr[k] = L[i]
-            i += 1
-        else:
-            arr[k] = M[j]
+    while i < len(L) and j < len(M):                          # This improves sorting time
+        if L[i] < M[j]:                                       # as were using insertion sort which is faster for small arrays
+            arr[k] = L[i]                                     # than merge sort since it needs extra time 
+            i += 1                                            # money due to the recursive calls, memory allocations and computations
+        else:                                                 # and that could be costly.
+            arr[k] = M[j]                                     # This method reduces number of recursive calls.
             j += 1
         k += 1
 
@@ -40,6 +41,7 @@ def hybrid_merge_insertion (arr,THRESHOLD ):
         j += 1
         k += 1
 
+# Quick Sort partition
 def partition(arr, low, high):
     pivot = arr[high]
     i = low - 1
