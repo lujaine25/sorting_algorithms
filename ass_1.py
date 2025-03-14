@@ -1,7 +1,6 @@
 import random
 import time
-import matplotlib.pyplot as plt
-
+import matplotlib.pyplot as plt 
 
 def generate_arr(size: int):
     return [random.randint(0, size) for _ in range(size)]
@@ -13,7 +12,7 @@ def measure_sorting_time(sort_function, arr):
     end_time = time.perf_counter()
     return (end_time - start_time) * 1000
 
-def bubble_sort(arr: list[int]):
+def bubble_sort(arr):
     sorted_flag = False
     while not sorted_flag:
         sorted_flag = True
@@ -23,14 +22,14 @@ def bubble_sort(arr: list[int]):
                 sorted_flag = False
 
 
-def selection_sort(array):
-    size = len(array)
+def selection_sort(arr):
+    size = len(arr)
     for step in range(size):
         min_idx = step
         for i in range(step + 1, size):
-            if array[i] < array[min_idx]:
+            if arr[i] < arr[min_idx]:
                 min_idx = i
-        array[step], array[min_idx] = array[min_idx], array[step]
+        arr[step], arr[min_idx] = arr[min_idx], arr[step]
 
 
 def insertion_sort(arr):
@@ -73,12 +72,26 @@ def merge_sort(arr):
         arr[k] = M[j]
         j += 1
         k += 1
+
+def quick_sort(arr):
+    if len(arr) <= 1: 
+        return arr
+
+    pivot_index = random.randint(0, len(arr) - 1)  
+    pivot = arr[pivot_index]  
+
+    left = [x for i, x in enumerate(arr) if x < pivot and i != pivot_index]  
+    right = [x for i, x in enumerate(arr) if x >= pivot and i != pivot_index]  
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
 # Generate random array
-array_sizes = [1000, 2000,10000,25000]
+array_sizes = [1000, 2000,10000,25000] # Array sizes to test
 bubble_times = []
 selection_times = []
 insertion_times = []
 merge_times = []
+quick_times = []
 for size in array_sizes:
     random_array = generate_arr(size)
 
@@ -86,6 +99,8 @@ for size in array_sizes:
     selection_times.append(measure_sorting_time(selection_sort, random_array))
     insertion_times.append(measure_sorting_time(insertion_sort, random_array))
     merge_times.append(measure_sorting_time(merge_sort, random_array))
+    quick_times.append(measure_sorting_time(quick_sort, random_array))
+
 
 # Plot the graph
 plt.figure(figsize=(10, 6))
@@ -93,6 +108,7 @@ plt.plot(array_sizes, bubble_times, marker='o', linestyle='-', color='r', label=
 plt.plot(array_sizes, selection_times, marker='s', linestyle='-', color='g', label="Selection Sort")
 plt.plot(array_sizes, insertion_times, marker='d', linestyle='-', color='b', label="Insertion Sort")
 plt.plot(array_sizes, merge_times, marker='x', linestyle='-', color='y', label="Merge Sort")
+plt.plot(array_sizes, quick_times, marker='p', linestyle='-', color='m', label="Quick Sort")
 
 # Graph Labels & Title
 plt.xlabel("Array Size")
