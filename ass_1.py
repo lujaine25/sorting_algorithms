@@ -104,6 +104,7 @@ bubble_times = []
 selection_times = []
 insertion_times = []
 merge_times = []
+heap_times = []
 for size in array_sizes:
     random_array = generate_arr(size)
 
@@ -111,6 +112,7 @@ for size in array_sizes:
     selection_times.append(measure_sorting_time(selection_sort, random_array))
     insertion_times.append(measure_sorting_time(insertion_sort, random_array))
     merge_times.append(measure_sorting_time(merge_sort, random_array))
+    heap_times.append(measure_sorting_time(heap_sort, random_array))
 
 # Plot the graph
 plt.figure(figsize=(10, 6))
@@ -118,6 +120,7 @@ plt.plot(array_sizes, bubble_times, marker='o', linestyle='-', color='r', label=
 plt.plot(array_sizes, selection_times, marker='s', linestyle='-', color='g', label="Selection Sort")
 plt.plot(array_sizes, insertion_times, marker='d', linestyle='-', color='b', label="Insertion Sort")
 plt.plot(array_sizes, merge_times, marker='x', linestyle='-', color='y', label="Merge Sort")
+plt.plot(array_sizes, heap_times, marker='^', linestyle='-', color='m', label="Heap Sort")
 
 # Graph Labels & Title
 plt.xlabel("Array Size")
