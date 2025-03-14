@@ -40,9 +40,35 @@ def hybrid_merge_insertion (arr,THRESHOLD ):
         j += 1
         k += 1
 
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+def KthSmallest(arr, low, high, k):
+    if k > 0 and k <= high - low + 1:
+        index = partition(arr, low, high)
+
+        if index - low == k - 1:
+            return arr[index]
+
+        elif index - low > k - 1:
+            return KthSmallest(arr, low, index - 1, k)
+        
+        else:
+            return KthSmallest(arr, index + 1, high, k - index + low - 1)
 
 
-arr = [9, 5, 2, 7, 1, 8, 3]
+arr = [9, 5, 23, 7, 15, 8, 3, 6, 14]
 THRESHOLD = 3
+K = 8
+print(str(K) + "th smallest element: " + str(KthSmallest(arr, 0, len(arr) - 1, K)))
 hybrid_merge_insertion(arr, THRESHOLD)
 print(arr)
