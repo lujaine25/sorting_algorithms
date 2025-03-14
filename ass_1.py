@@ -85,6 +85,31 @@ def quick_sort(arr):
 
     return quick_sort(left) + [pivot] + quick_sort(right)
 
+        
+# Heap Sort
+def max_heapify(arr, i, size) :
+    left=2*i+1
+    right=2*i+2
+    largest=i
+    if left<size and arr[left] > arr[largest]:
+        largest=left
+    if right<size and arr[right]> arr[largest]:
+        largest=right
+    if i!=largest:
+        arr[i],arr[largest]=arr[largest],arr[i]
+        max_heapify(arr,largest,size)   
+
+def buildMaxHeap(arr,size):
+    for i in range(size //2 - 1, -1, -1):
+        max_heapify(arr, i, size)
+
+def heap_sort(arr):
+    size=len(arr)
+    buildMaxHeap(arr,size)
+    for i in range(size -1, 0, -1):
+        arr[0],arr[i]=arr[i],arr[0]
+        max_heapify(arr,0,i)      
+
 # Generate random array
 array_sizes = [1000, 2000,10000,25000] # Array sizes to test
 bubble_times = []
@@ -92,6 +117,7 @@ selection_times = []
 insertion_times = []
 merge_times = []
 quick_times = []
+heap_times = []
 for size in array_sizes:
     random_array = generate_arr(size)
 
@@ -101,6 +127,7 @@ for size in array_sizes:
     merge_times.append(measure_sorting_time(merge_sort, random_array))
     quick_times.append(measure_sorting_time(quick_sort, random_array))
 
+    heap_times.append(measure_sorting_time(heap_sort, random_array))
 
 # Plot the graph
 plt.figure(figsize=(10, 6))
@@ -109,6 +136,7 @@ plt.plot(array_sizes, selection_times, marker='s', linestyle='-', color='g', lab
 plt.plot(array_sizes, insertion_times, marker='d', linestyle='-', color='b', label="Insertion Sort")
 plt.plot(array_sizes, merge_times, marker='x', linestyle='-', color='y', label="Merge Sort")
 plt.plot(array_sizes, quick_times, marker='p', linestyle='-', color='m', label="Quick Sort")
+plt.plot(array_sizes, heap_times, marker='^', linestyle='-', color='m', label="Heap Sort")
 
 # Graph Labels & Title
 plt.xlabel("Array Size")
@@ -119,3 +147,6 @@ plt.grid(True)
 
 # Show the graph
 plt.show()
+
+
+
