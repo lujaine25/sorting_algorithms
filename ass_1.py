@@ -73,6 +73,31 @@ def merge_sort(arr):
         arr[k] = M[j]
         j += 1
         k += 1
+        
+# Heap Sort
+def max_heapify(arr, i, size) :
+    left=2*i+1
+    right=2*i+2
+    largest=i
+    if left<size and arr[left] > arr[largest]:
+        largest=left
+    if right<size and arr[right]> arr[largest]:
+        largest=right
+    if i!=largest:
+        arr[i],arr[largest]=arr[largest],arr[i]
+        max_heapify(arr,largest,size)   
+
+def buildMaxHeap(arr,size):
+    for i in range(size //2 - 1, -1, -1):
+        max_heapify(arr, i, size)
+
+def heap_sort(arr):
+    size=len(arr)
+    buildMaxHeap(arr,size)
+    for i in range(size -1, 0, -1):
+        arr[0],arr[i]=arr[i],arr[0]
+        max_heapify(arr,0,i)      
+
 # Generate random array
 array_sizes = [1000, 2000,10000,25000]
 bubble_times = []
@@ -103,3 +128,6 @@ plt.grid(True)
 
 # Show the graph
 plt.show()
+
+
+
